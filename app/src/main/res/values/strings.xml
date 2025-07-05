@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">AutoRestart</string>
+
+    <string name="shizuku_unsupported">Unsupported Shizuku version</string>
+    <string name="shizuku_not_installed">Shizuku is not installed</string>
+    <string name="shizuku_permission_granted">Shizuku permission granted</string>
+    <string name="shizuku_permission_denied">Shizuku permission denied</string>
+    <string name="shizuku_requesting_permission">Requesting Shizuku permission</string>
+</resources>
