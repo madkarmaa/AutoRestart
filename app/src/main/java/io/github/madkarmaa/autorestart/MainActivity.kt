@@ -68,6 +68,12 @@ class MainActivity : ComponentActivity() {
             return
         }
 
+        if (!Shizuku.pingBinder()) {
+            Logger.toast(R.string.shizuku_not_ready)
+            callback?.onPermissionDenied()
+            return
+        }
+
         if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
             callback?.onPermissionGranted()
             return
