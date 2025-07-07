@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import io.github.madkarmaa.autorestart.works.RebootDeviceWork
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
@@ -51,7 +52,10 @@ class MainActivity : ComponentActivity() {
 
         checkPermission(object : PermissionCallback {
             override fun onPermissionGranted() {
-                Logger.toast(R.string.shizuku_permission_granted)
+                schedulePeriodicWorkRequest(
+                    RebootDeviceWork.TAG,
+                    RebootDeviceWork.createPeriodicWorkRequest(20, 9)
+                )
             }
 
             override fun onPermissionDenied() {

@@ -1,19 +1,29 @@
 package io.github.madkarmaa.autorestart.works
 
+import android.content.Context
 import androidx.work.Constraints
 import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import io.github.madkarmaa.autorestart.Device
-import io.github.madkarmaa.autorestart.MainActivity.Companion.app
+import io.github.madkarmaa.autorestart.Logger
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
 import java.util.concurrent.TimeUnit
 
 
-class RebootDeviceWork(params: WorkerParameters) : Worker(app, params) {
+class RebootDeviceWork(context: Context, params: WorkerParameters) : Worker(context, params) {
+//    override fun doWork(): Result {
+//        thread {
+//            Thread.sleep(1000)
+//            Device.reboot()
+//        }
+//
+//        return Result.success()
+//    }
+
     override fun doWork(): Result {
         return if (Device.reboot()) Result.success()
         else Result.failure()
@@ -110,6 +120,8 @@ class RebootDeviceWork(params: WorkerParameters) : Worker(app, params) {
             val initialDelayMillis = Duration.between(now, targetDateTime).toMillis()
             // Determine the repeat interval (daily or weekly)
             val repeatInterval = if (isDailySchedule) 24 else 24 * 7
+
+            Logger.info("Scheduling reboot at $hour:$minute ${if (isDailySchedule) "daily" else "on day $dayOfWeek of the week"}")
 
             return PeriodicWorkRequestBuilder<RebootDeviceWork>(
                 repeatInterval.toLong(), TimeUnit.HOURS
