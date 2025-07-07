@@ -4,6 +4,9 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import androidx.work.ExistingPeriodicWorkPolicy
+import androidx.work.PeriodicWorkRequest
+import androidx.work.WorkManager
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
@@ -37,7 +40,10 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // https://github.com/LSPosed/AndroidHiddenApiBypass/?tab=readme-ov-file#usage
         HiddenApiBypass.addHiddenApiExemptions("")
+
         enableEdgeToEdge()
         app = this
 
@@ -45,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
         checkPermission(object : PermissionCallback {
             override fun onPermissionGranted() {
-                Device.reboot()
+                Logger.toast(R.string.shizuku_permission_granted)
             }
 
             override fun onPermissionDenied() {
@@ -85,6 +91,12 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
+
+    fun schedulePeriodicWorkRequest(
+        key: String,
+        request: PeriodicWorkRequest,
+        action: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
+    ) = WorkManager.getInstance(this).enqueueUniquePeriodicWork(key, action, request)
 
     companion object {
         lateinit var app: MainActivity private set
