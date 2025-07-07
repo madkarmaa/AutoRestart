@@ -6,4 +6,5 @@
     <string name="shizuku_permission_granted">Shizuku permission granted</string>
     <string name="shizuku_permission_denied">Shizuku permission denied</string>
     <string name="shizuku_requesting_permission">Requesting Shizuku permission</string>
+    <string name="device_reboot_failed">Failed to reboot device</string>
 </resources>

@@ -2,9 +2,9 @@ package io.github.madkarmaa.autorestart
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.enableEdgeToEdge
+import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
 
@@ -20,10 +20,10 @@ class MainActivity : ComponentActivity() {
     private fun onRequestPermissionsResult(requestCode: Int, grantResult: Int) {
         val granted = grantResult == PackageManager.PERMISSION_GRANTED
         if (granted) {
-            toast(R.string.shizuku_permission_granted)
+            Logger.toast(R.string.shizuku_permission_granted)
             currentPermissionCallback?.onPermissionGranted()
         } else {
-            toast(R.string.shizuku_permission_denied, Log.ERROR)
+            Logger.toast(R.string.shizuku_permission_denied)
             currentPermissionCallback?.onPermissionDenied()
         }
     }
@@ -37,6 +37,7 @@ class MainActivity : ComponentActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        HiddenApiBypass.addHiddenApiExemptions("")
         enableEdgeToEdge()
         app = this
 
@@ -44,7 +45,7 @@ class MainActivity : ComponentActivity() {
 
         checkPermission(object : PermissionCallback {
             override fun onPermissionGranted() {
-                // Do whatever needs to happen after permission is granted
+                Device.reboot()
             }
 
             override fun onPermissionDenied() {
@@ -62,7 +63,7 @@ class MainActivity : ComponentActivity() {
         currentPermissionCallback = callback
 
         if (Shizuku.isPreV11()) {
-            toast(R.string.shizuku_unsupported, Log.ERROR)
+            Logger.toast(R.string.shizuku_unsupported)
             callback?.onPermissionDenied()
             return
         }
@@ -71,11 +72,11 @@ class MainActivity : ComponentActivity() {
             callback?.onPermissionGranted()
             return
         } else if (Shizuku.shouldShowRequestPermissionRationale()) {
-            toast(R.string.shizuku_permission_denied, Log.ERROR)
+            Logger.toast(R.string.shizuku_permission_denied)
             callback?.onPermissionDenied()
             return
         } else {
-            toast(R.string.shizuku_requesting_permission)
+            Logger.toast(R.string.shizuku_requesting_permission)
             Shizuku.requestPermission(code)
         }
     }
