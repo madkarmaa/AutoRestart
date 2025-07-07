@@ -62,28 +62,27 @@ class MainActivity : ComponentActivity() {
     private fun checkPermission(callback: PermissionCallback? = null, code: Int = 0) {
         currentPermissionCallback = callback
 
-        if (Shizuku.isPreV11()) {
-            Logger.toast(R.string.shizuku_unsupported)
+        fun denyPermission(messageResId: Int) {
+            Logger.toast(messageResId)
             callback?.onPermissionDenied()
             return
         }
 
-        if (!Shizuku.pingBinder()) {
-            Logger.toast(R.string.shizuku_not_ready)
-            callback?.onPermissionDenied()
-            return
-        }
+        when {
+            Shizuku.isPreV11() -> denyPermission(R.string.shizuku_unsupported)
 
-        if (Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED) {
-            callback?.onPermissionGranted()
-            return
-        } else if (Shizuku.shouldShowRequestPermissionRationale()) {
-            Logger.toast(R.string.shizuku_permission_denied)
-            callback?.onPermissionDenied()
-            return
-        } else {
-            Logger.toast(R.string.shizuku_requesting_permission)
-            Shizuku.requestPermission(code)
+            !Shizuku.pingBinder() -> denyPermission(R.string.shizuku_not_ready)
+
+            Shizuku.checkSelfPermission() == PackageManager.PERMISSION_GRANTED -> {
+                callback?.onPermissionGranted()
+            }
+
+            Shizuku.shouldShowRequestPermissionRationale() -> denyPermission(R.string.shizuku_permission_denied)
+
+            else -> {
+                Logger.toast(R.string.shizuku_requesting_permission)
+                Shizuku.requestPermission(code)
+            }
         }
     }
 
