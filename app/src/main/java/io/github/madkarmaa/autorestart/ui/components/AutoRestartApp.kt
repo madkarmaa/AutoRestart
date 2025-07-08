@@ -31,6 +31,7 @@ import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import io.github.madkarmaa.autorestart.Logger
 import io.github.madkarmaa.autorestart.MainActivity.Companion.app
+import io.github.madkarmaa.autorestart.PreferencesManager
 import io.github.madkarmaa.autorestart.R
 import io.github.madkarmaa.autorestart.SCHEDULE_OPTIONS
 import io.github.madkarmaa.autorestart.formatTime
@@ -45,9 +46,10 @@ fun AutoRestartApp(
         schedulePeriodicWorkRequest(app, key, request, policy)
     }
 ) {
-    var selectedHour by remember { mutableIntStateOf(3) }
-    var selectedMinute by remember { mutableIntStateOf(0) }
-    var selectedScheduleOption by remember { mutableStateOf(SCHEDULE_OPTIONS[0]) }
+    // Load saved values from preferences
+    var selectedHour by remember { mutableIntStateOf(PreferencesManager.rebootHour) }
+    var selectedMinute by remember { mutableIntStateOf(PreferencesManager.rebootMinute) }
+    var selectedScheduleOption by remember { mutableStateOf(PreferencesManager.rebootScheduleOption) }
 
     var showTimePicker by remember { mutableStateOf(false) }
     var dropdownExpanded by remember { mutableStateOf(false) }
@@ -198,6 +200,11 @@ fun AutoRestartApp(
                                 )
                             }
                         }
+
+                        // Save settings to preferences
+                        PreferencesManager.saveRebootSchedule(
+                            selectedHour, selectedMinute, selectedScheduleOption
+                        )
 
                         schedulePeriodicWorkRequest(
                             RebootDeviceWork.TAG,
