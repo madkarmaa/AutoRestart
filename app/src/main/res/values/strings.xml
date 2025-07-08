@@ -17,4 +17,5 @@
     <string name="table_field_time">Time</string>
     <string name="table_field_schedule">Schedule</string>
     <string name="save_schedule">Save reboot schedule</string>
+    <string name="option_daily">Daily</string>
 </resources>

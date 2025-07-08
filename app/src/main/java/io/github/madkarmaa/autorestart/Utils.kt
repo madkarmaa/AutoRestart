@@ -17,10 +17,11 @@ fun schedulePeriodicWorkRequest(
     action: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
 ) = WorkManager.getInstance(ctx).enqueueUniquePeriodicWork(key, action, request)
 
-fun formatTime(hour: Int, minute: Int) = String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
+fun formatTime(hour: Int, minute: Int) =
+    String.format(Locale.getDefault(), "%02d:%02d", hour, minute)
 
 fun getStrRes(resId: Int) = app.getString(resId)
 
-val SCHEDULE_OPTIONS = listOf("Daily") + DayOfWeek.entries.map {
+val SCHEDULE_OPTIONS = listOf(getStrRes(R.string.option_daily)) + DayOfWeek.entries.map {
     it.getDisplayName(TextStyle.FULL, Locale.getDefault())
 }
