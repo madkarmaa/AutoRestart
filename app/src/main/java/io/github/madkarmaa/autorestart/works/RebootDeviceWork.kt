@@ -8,6 +8,8 @@ import androidx.work.Worker
 import androidx.work.WorkerParameters
 import io.github.madkarmaa.autorestart.Device
 import io.github.madkarmaa.autorestart.Logger
+import io.github.madkarmaa.autorestart.SCHEDULE_OPTIONS
+import io.github.madkarmaa.autorestart.formatTime
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime
@@ -121,7 +123,11 @@ class RebootDeviceWork(context: Context, params: WorkerParameters) : Worker(cont
             // Determine the repeat interval (daily or weekly)
             val repeatInterval = if (isDailySchedule) 24 else 24 * 7
 
-            Logger.info("Scheduling reboot at $hour:$minute ${if (isDailySchedule) "daily" else "on day $dayOfWeek of the week"}")
+            Logger.info(
+                "Scheduling reboot at ${
+                    formatTime(hour, minute)
+                } ${if (isDailySchedule) "daily" else "every ${SCHEDULE_OPTIONS[dayOfWeek]}"}"
+            )
 
             return PeriodicWorkRequestBuilder<RebootDeviceWork>(
                 repeatInterval.toLong(), TimeUnit.HOURS

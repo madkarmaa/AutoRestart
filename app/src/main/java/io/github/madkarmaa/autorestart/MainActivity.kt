@@ -3,11 +3,9 @@ package io.github.madkarmaa.autorestart
 import android.content.pm.PackageManager
 import android.os.Bundle
 import androidx.activity.ComponentActivity
+import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import androidx.work.ExistingPeriodicWorkPolicy
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import io.github.madkarmaa.autorestart.works.RebootDeviceWork
+import io.github.madkarmaa.autorestart.ui.components.AutoRestartApp
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
 import rikka.shizuku.Shizuku.OnRequestPermissionResultListener
@@ -52,10 +50,9 @@ class MainActivity : ComponentActivity() {
 
         checkPermission(object : PermissionCallback {
             override fun onPermissionGranted() {
-                schedulePeriodicWorkRequest(
-                    RebootDeviceWork.TAG,
-                    RebootDeviceWork.createPeriodicWorkRequest(20, 9)
-                )
+                setContent {
+                    AutoRestartApp()
+                }
             }
 
             override fun onPermissionDenied() {
@@ -95,12 +92,6 @@ class MainActivity : ComponentActivity() {
             }
         }
     }
-
-    fun schedulePeriodicWorkRequest(
-        key: String,
-        request: PeriodicWorkRequest,
-        action: ExistingPeriodicWorkPolicy = ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
-    ) = WorkManager.getInstance(this).enqueueUniquePeriodicWork(key, action, request)
 
     companion object {
         lateinit var app: MainActivity private set

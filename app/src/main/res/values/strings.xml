@@ -8,4 +8,5 @@
     <string name="shizuku_not_ready">Start Shizuku first</string>
     <string name="shizuku_requesting_permission">Requesting Shizuku permission</string>
     <string name="device_reboot_failed">Failed to reboot device</string>
+    <string name="reboot_scheduled">Reboot schedule has been set successfully</string>
 </resources>
