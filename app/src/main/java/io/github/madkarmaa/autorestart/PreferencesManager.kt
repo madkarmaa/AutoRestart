@@ -6,6 +6,15 @@ import io.github.madkarmaa.autorestart.MainActivity.Companion.app
 
 
 object PreferencesManager {
+    private const val PREFERENCES_NAME = "autorestart_preferences"
+    private const val KEY_HOUR = "reboot_hour"
+    private const val KEY_MINUTE = "reboot_minute"
+    private const val KEY_SCHEDULE_OPTION = "schedule_option"
+
+    private const val DEFAULT_HOUR = 3
+    private const val DEFAULT_MINUTE = 0
+    private val DEFAULT_SCHEDULE_OPTION = SCHEDULE_OPTIONS[0]
+
     private val sharedPreferences: SharedPreferences by lazy {
         app.getSharedPreferences(PREFERENCES_NAME, Context.MODE_PRIVATE)
     }
@@ -19,20 +28,12 @@ object PreferencesManager {
         }
     }
 
-    val rebootHour: Int get() = sharedPreferences.getInt(KEY_HOUR, DEFAULT_HOUR)
+    val rebootHour: Int by LoggableProperty(sharedPreferences.getInt(KEY_HOUR, DEFAULT_HOUR))
 
-    val rebootMinute: Int get() = sharedPreferences.getInt(KEY_MINUTE, DEFAULT_MINUTE)
+    val rebootMinute: Int by LoggableProperty(sharedPreferences.getInt(KEY_MINUTE, DEFAULT_MINUTE))
 
-    val rebootScheduleOption: String
-        get() = sharedPreferences.getString(KEY_SCHEDULE_OPTION, DEFAULT_SCHEDULE_OPTION)
+    val rebootScheduleOption: String by LoggableProperty(
+        sharedPreferences.getString(KEY_SCHEDULE_OPTION, DEFAULT_SCHEDULE_OPTION)
             ?: DEFAULT_SCHEDULE_OPTION
-
-    private const val PREFERENCES_NAME = "autorestart_preferences"
-    private const val KEY_HOUR = "reboot_hour"
-    private const val KEY_MINUTE = "reboot_minute"
-    private const val KEY_SCHEDULE_OPTION = "schedule_option"
-
-    private const val DEFAULT_HOUR = 3
-    private const val DEFAULT_MINUTE = 0
-    private val DEFAULT_SCHEDULE_OPTION = SCHEDULE_OPTIONS[0]
+    )
 }
