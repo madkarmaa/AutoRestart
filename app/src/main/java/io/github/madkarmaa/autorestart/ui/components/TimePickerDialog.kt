@@ -12,6 +12,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import io.github.madkarmaa.autorestart.R
+import io.github.madkarmaa.autorestart.getStrRes
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -27,26 +29,32 @@ fun TimePickerDialog(
         initialHour = initialHour, initialMinute = initialMinute, is24Hour = is24Hour
     )
 
-    AlertDialog(onDismissRequest = onDismissRequest, title = { Text("Select Time") }, text = {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.padding(16.dp)
-        ) {
-            TimePicker(
-                state = state
-            )
-        }
-    }, confirmButton = {
-        Button(
-            onClick = {
-                onConfirm(state.hour, state.minute)
-            }) {
-            Text("Confirm")
-        }
-    }, dismissButton = {
-        Button(
-            onClick = onDismissRequest
-        ) {
-            Text("Cancel")
-        }
-    })
+    AlertDialog(
+        onDismissRequest = onDismissRequest,
+        title = { Text(getStrRes(R.string.time_picker_title)) },
+        text = {
+            Column(
+                horizontalAlignment = Alignment.CenterHorizontally,
+                modifier = Modifier.padding(16.dp)
+            ) {
+                TimePicker(
+                    state = state
+                )
+            }
+        },
+        confirmButton = {
+            Button(
+                onClick = {
+                    onConfirm(state.hour, state.minute)
+                }) {
+                Text(getStrRes(R.string.confirm))
+            }
+        },
+        dismissButton = {
+            Button(
+                onClick = onDismissRequest
+            ) {
+                Text(getStrRes(R.string.cancel))
+            }
+        })
 }

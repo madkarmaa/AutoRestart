@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
+import io.github.madkarmaa.autorestart.MainActivity.Companion.app
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale
@@ -17,6 +18,8 @@ fun schedulePeriodicWorkRequest(
 ) = WorkManager.getInstance(ctx).enqueueUniquePeriodicWork(key, action, request)
 
 fun formatTime(hour: Int, minute: Int) = String.format(Locale.ENGLISH, "%02d:%02d", hour, minute)
+
+fun getStrRes(resId: Int) = app.getString(resId)
 
 val SCHEDULE_OPTIONS = listOf("Daily") + DayOfWeek.entries.map {
     it.getDisplayName(TextStyle.FULL, Locale.ENGLISH)

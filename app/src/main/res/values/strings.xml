@@ -9,4 +9,12 @@
     <string name="shizuku_requesting_permission">Requesting Shizuku permission</string>
     <string name="device_reboot_failed">Failed to reboot device</string>
     <string name="reboot_scheduled">Reboot schedule has been set successfully</string>
+    <string name="time_picker_title">Select time</string>
+    <string name="confirm">Confirm</string>
+    <string name="cancel">Cancel</string>
+    <string name="settings">Settings</string>
+    <string name="table_update_button">Update</string>
+    <string name="table_field_time">Time</string>
+    <string name="table_field_schedule">Schedule</string>
+    <string name="save_schedule">Save reboot schedule</string>
 </resources>

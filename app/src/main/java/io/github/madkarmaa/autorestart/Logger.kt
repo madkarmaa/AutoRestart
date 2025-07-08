@@ -28,7 +28,7 @@ object Logger {
         Log.w(TAG, message)
     }
 
-    fun toast(message: String) {
+    private fun toast(message: String) {
         Toast.makeText(app, message, Toast.LENGTH_SHORT).show()
     }
 

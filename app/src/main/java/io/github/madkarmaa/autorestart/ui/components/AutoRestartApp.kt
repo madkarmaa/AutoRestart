@@ -3,7 +3,7 @@ package io.github.madkarmaa.autorestart.ui.components
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -14,6 +14,7 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -22,6 +23,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
@@ -30,6 +34,7 @@ import io.github.madkarmaa.autorestart.MainActivity.Companion.app
 import io.github.madkarmaa.autorestart.R
 import io.github.madkarmaa.autorestart.SCHEDULE_OPTIONS
 import io.github.madkarmaa.autorestart.formatTime
+import io.github.madkarmaa.autorestart.getStrRes
 import io.github.madkarmaa.autorestart.schedulePeriodicWorkRequest
 import io.github.madkarmaa.autorestart.works.RebootDeviceWork
 
@@ -42,12 +47,12 @@ fun AutoRestartApp(
 ) {
     var selectedHour by remember { mutableIntStateOf(3) }
     var selectedMinute by remember { mutableIntStateOf(0) }
-    var showTimePicker by remember { mutableStateOf(false) }
-
-    var expanded by remember { mutableStateOf(false) }
     var selectedScheduleOption by remember { mutableStateOf(SCHEDULE_OPTIONS[0]) }
 
-    MaterialTheme {
+    var showTimePicker by remember { mutableStateOf(false) }
+    var dropdownExpanded by remember { mutableStateOf(false) }
+
+    MaterialTheme(colorScheme = darkColorScheme()) {
         Surface(
             modifier = Modifier.fillMaxSize(), color = MaterialTheme.colorScheme.background
         ) {
@@ -58,15 +63,55 @@ fun AutoRestartApp(
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
             ) {
-                Text(
-                    text = "Auto Restart Settings", style = MaterialTheme.typography.headlineMedium
-                )
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = app.getString(R.string.app_name),
+                        style = MaterialTheme.typography.headlineMedium,
+                        fontWeight = FontWeight.Bold,
+                        color = MaterialTheme.colorScheme.primary
+                    )
+                    Text(
+                        text = " ${getStrRes(R.string.settings)}",
+                        style = MaterialTheme.typography.headlineMedium
+                    )
+                }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                VerticalSpacer(32.dp)
 
-                // Time picker button
-                Button(onClick = { showTimePicker = true }) {
-                    Text("Select Time: ${formatTime(selectedHour, selectedMinute)}")
+                // Time field row
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        getStrRes(R.string.table_field_time),
+                        modifier = Modifier.weight(1f),
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Start
+                    )
+
+                    Text(
+                        formatTime(selectedHour, selectedMinute),
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Box(
+                        modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd
+                    ) {
+                        Button(onClick = { showTimePicker = true }) {
+                            Text(getStrRes(R.string.table_update_button))
+                        }
+                    }
                 }
 
                 if (showTimePicker) TimePickerDialog(
@@ -80,27 +125,62 @@ fun AutoRestartApp(
                     initialMinute = selectedMinute
                 )
 
+                VerticalSpacer(16.dp)
 
-                Spacer(modifier = Modifier.height(16.dp))
+                // Schedule field row
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        getStrRes(R.string.table_field_schedule),
+                        modifier = Modifier.weight(1f),
+                        color = MaterialTheme.colorScheme.primary,
+                        fontWeight = FontWeight.Medium,
+                        textAlign = TextAlign.Start
+                    )
 
-                // Schedule type dropdown
-                Box {
-                    Button(onClick = { expanded = true }) {
-                        Text("Schedule: $selectedScheduleOption")
+                    Text(
+                        selectedScheduleOption,
+                        modifier = Modifier.weight(1f),
+                        fontWeight = FontWeight.Bold,
+                        style = MaterialTheme.typography.bodyLarge,
+                        textAlign = TextAlign.Center
+                    )
+
+                    Box(
+                        modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterEnd
+                    ) {
+                        Button(onClick = { dropdownExpanded = true }) {
+                            Text(getStrRes(R.string.table_update_button))
+                        }
                     }
+                }
 
+                Box(modifier = Modifier.fillMaxWidth()) {
                     DropdownMenu(
-                        expanded = expanded, onDismissRequest = { expanded = false }) {
+                        expanded = dropdownExpanded,
+                        onDismissRequest = { dropdownExpanded = false },
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
                         SCHEDULE_OPTIONS.forEach {
-                            DropdownMenuItem(text = { Text(it) }, onClick = {
+                            DropdownMenuItem(text = {
+                                Text(
+                                    it, style = TextStyle(
+                                        textAlign = TextAlign.Center, fontWeight = FontWeight.Bold
+                                    ), modifier = Modifier.fillMaxWidth()
+                                )
+                            }, onClick = {
                                 selectedScheduleOption = it
-                                expanded = false
+                                dropdownExpanded = false
                             })
                         }
                     }
                 }
 
-                Spacer(modifier = Modifier.height(32.dp))
+                VerticalSpacer(32.dp)
 
                 // Save button
                 Button(
@@ -125,9 +205,12 @@ fun AutoRestartApp(
                             ExistingPeriodicWorkPolicy.CANCEL_AND_REENQUEUE
                         )
                         Logger.toast(R.string.reboot_scheduled)
-                    }, modifier = Modifier.fillMaxWidth()
+                    }, modifier = Modifier.height(56.dp)
                 ) {
-                    Text("Save Schedule")
+                    Text(
+                        getStrRes(R.string.save_schedule),
+                        style = MaterialTheme.typography.titleMedium
+                    )
                 }
             }
         }
