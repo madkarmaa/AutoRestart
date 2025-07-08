@@ -40,7 +40,7 @@ object Device {
         asInterface(className, SystemServiceHelper.getSystemService(serviceName))
 
     fun reboot() = runCatching {
-        Logger.info("Rebooting device, bye!")
+        Logger.warn("Rebooting device, bye!")
         asInterface("android.os.IPowerManager", Context.POWER_SERVICE).let {
             // https://android.googlesource.com/platform/frameworks/base/+/master/core/java/android/os/IPowerManager.aidl#116
             HiddenApiBypass.invoke(it::class.java, it, "reboot", false, null, false)
