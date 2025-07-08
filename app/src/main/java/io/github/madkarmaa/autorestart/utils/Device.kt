@@ -18,10 +18,11 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package io.github.madkarmaa.autorestart
+package io.github.madkarmaa.autorestart.utils
 
 import android.content.Context
 import android.os.IBinder
+import io.github.madkarmaa.autorestart.R
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.ShizukuBinderWrapper
 import rikka.shizuku.SystemServiceHelper

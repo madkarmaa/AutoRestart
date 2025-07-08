@@ -1,10 +1,11 @@
-package io.github.madkarmaa.autorestart
+package io.github.madkarmaa.autorestart.utils
 
 import android.content.Context
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
 import androidx.work.WorkManager
 import io.github.madkarmaa.autorestart.MainActivity.Companion.app
+import io.github.madkarmaa.autorestart.R
 import java.time.DayOfWeek
 import java.time.format.TextStyle
 import java.util.Locale

@@ -1,8 +1,9 @@
-package io.github.madkarmaa.autorestart
+package io.github.madkarmaa.autorestart.utils
 
 import android.util.Log
 import android.widget.Toast
 import io.github.madkarmaa.autorestart.MainActivity.Companion.app
+import io.github.madkarmaa.autorestart.R
 
 
 object Logger {

@@ -29,14 +29,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
-import io.github.madkarmaa.autorestart.Logger
+import io.github.madkarmaa.autorestart.utils.Logger
 import io.github.madkarmaa.autorestart.MainActivity.Companion.app
-import io.github.madkarmaa.autorestart.PreferencesManager
+import io.github.madkarmaa.autorestart.utils.PreferencesManager
 import io.github.madkarmaa.autorestart.R
-import io.github.madkarmaa.autorestart.SCHEDULE_OPTIONS
-import io.github.madkarmaa.autorestart.formatTime
-import io.github.madkarmaa.autorestart.getStrRes
-import io.github.madkarmaa.autorestart.schedulePeriodicWorkRequest
+import io.github.madkarmaa.autorestart.utils.SCHEDULE_OPTIONS
+import io.github.madkarmaa.autorestart.utils.formatTime
+import io.github.madkarmaa.autorestart.utils.getStrRes
+import io.github.madkarmaa.autorestart.utils.schedulePeriodicWorkRequest
 import io.github.madkarmaa.autorestart.works.RebootDeviceWork
 
 

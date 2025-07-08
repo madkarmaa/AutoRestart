@@ -6,10 +6,10 @@ import androidx.work.PeriodicWorkRequest
 import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.Worker
 import androidx.work.WorkerParameters
-import io.github.madkarmaa.autorestart.Device
-import io.github.madkarmaa.autorestart.Logger
-import io.github.madkarmaa.autorestart.SCHEDULE_OPTIONS
-import io.github.madkarmaa.autorestart.formatTime
+import io.github.madkarmaa.autorestart.utils.Device
+import io.github.madkarmaa.autorestart.utils.Logger
+import io.github.madkarmaa.autorestart.utils.SCHEDULE_OPTIONS
+import io.github.madkarmaa.autorestart.utils.formatTime
 import java.time.Duration
 import java.time.LocalDateTime
 import java.time.LocalTime

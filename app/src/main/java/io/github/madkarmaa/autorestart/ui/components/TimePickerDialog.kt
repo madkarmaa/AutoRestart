@@ -13,7 +13,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import io.github.madkarmaa.autorestart.R
-import io.github.madkarmaa.autorestart.getStrRes
+import io.github.madkarmaa.autorestart.utils.getStrRes
 
 
 @OptIn(ExperimentalMaterial3Api::class)

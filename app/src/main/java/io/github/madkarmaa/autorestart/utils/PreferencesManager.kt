@@ -1,4 +1,4 @@
-package io.github.madkarmaa.autorestart
+package io.github.madkarmaa.autorestart.utils
 
 import android.content.Context
 import android.content.SharedPreferences
