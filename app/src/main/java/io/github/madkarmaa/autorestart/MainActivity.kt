@@ -5,7 +5,7 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
-import io.github.madkarmaa.autorestart.ui.components.AutoRestartApp
+import io.github.madkarmaa.autorestart.ui.components.App
 import io.github.madkarmaa.autorestart.utils.Logger
 import org.lsposed.hiddenapibypass.HiddenApiBypass
 import rikka.shizuku.Shizuku
@@ -52,7 +52,7 @@ class MainActivity : ComponentActivity() {
         checkPermission(object : PermissionCallback {
             override fun onPermissionGranted() {
                 setContent {
-                    AutoRestartApp()
+                    App()
                 }
             }
 

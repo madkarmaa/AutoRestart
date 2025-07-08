@@ -29,10 +29,10 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.PeriodicWorkRequest
-import io.github.madkarmaa.autorestart.utils.Logger
 import io.github.madkarmaa.autorestart.MainActivity.Companion.app
-import io.github.madkarmaa.autorestart.utils.PreferencesManager
 import io.github.madkarmaa.autorestart.R
+import io.github.madkarmaa.autorestart.utils.Logger
+import io.github.madkarmaa.autorestart.utils.PreferencesManager
 import io.github.madkarmaa.autorestart.utils.SCHEDULE_OPTIONS
 import io.github.madkarmaa.autorestart.utils.formatTime
 import io.github.madkarmaa.autorestart.utils.getStrRes
@@ -41,7 +41,7 @@ import io.github.madkarmaa.autorestart.works.RebootDeviceWork
 
 
 @Composable
-fun AutoRestartApp(
+fun App(
     schedulePeriodicWorkRequest: (String, PeriodicWorkRequest, ExistingPeriodicWorkPolicy) -> Unit = { key, request, policy ->
         schedulePeriodicWorkRequest(app, key, request, policy)
     }
